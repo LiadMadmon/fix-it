@@ -1,16 +1,14 @@
 import { describe, it, expect } from 'vitest'
 import { renderWithProviders } from './renderWithProviders';
 import App from '../App';
-import { mockSuccessResponse } from './mock/api/fsm';
+import { mockRejectedResponse, mockRequestDoneResponse } from './mock/api/fsm';
 import { getFixRequestFormDriver } from './FixRequestForm.driver';
-import { waitFor } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 const fixRequestFormDriver = getFixRequestFormDriver();
 
 describe('App', () => {
   it('should display empty form when app loads', async () => {
-    mockSuccessResponse();
-
     renderWithProviders(<App />);
 
     const fixRequestFormButton = await fixRequestFormDriver.sendRequestButton();
@@ -30,11 +28,20 @@ describe('App', () => {
     })
   })
 
-  // it('should allow user to retry when the request fails', () => {
+  it('should allow user to retry when the request fails', async () => {
+    mockRejectedResponse();
 
-  // })
+    renderWithProviders(<App />);
 
-  // it('should show success screen when submission succeeds', () => {
+    const sendRequestButton = await fixRequestFormDriver.sendRequestButton();
+    fireEvent.click(sendRequestButton);
+
+    await waitFor(() => {
+      expect(sendRequestButton).toHaveTextContent('Retry');
+    })
+  })
+
+  // it('should allow user to retry when the request fails', async () => {
 
   // })
 

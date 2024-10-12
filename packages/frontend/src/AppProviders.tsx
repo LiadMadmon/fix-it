@@ -6,10 +6,9 @@ import { THEME } from "./ui/theme"
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   return (
     <ThemeProvider theme={THEME}>
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={new QueryClient({})}>
         {children}
       </QueryClientProvider>
     </ThemeProvider>
   )
 }
-

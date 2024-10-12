@@ -6,8 +6,8 @@ import { FixRequestEvents, FixRequestStates } from "../types/fsm";
 export const useFixRequestFSM = () => {
   const useTransitions = (): Transition<FixRequestStates, FixRequestEvents, FSMCallback>[] => {
     const { mutateAsync: submitForm } = useFixSubmission({
-      onSuccess: submitFixRequestSuccess,
-      onError: submitFixRequestError,
+      onDone: submitFixRequestSuccess,
+      onRejected: submitFixRequestError,
     });
 
     return ([

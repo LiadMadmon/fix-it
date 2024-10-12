@@ -1,6 +1,6 @@
-import { FixRequest } from "@fix-it/shared-types";
+import { FixRequest, FixRequestStatus } from "@fix-it/shared-types";
 import { useMutation } from "@tanstack/react-query"
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { BASE_URL } from "../consts";
 
 const postFixRequest = (fixRequest: FixRequest) => {
@@ -8,16 +8,22 @@ const postFixRequest = (fixRequest: FixRequest) => {
 }
 
 export const useFixSubmission = ({
-  onSuccess,
-  onError,
+  onDone,
+  onRejected,
 }: {
-  onSuccess: ((data: AxiosResponse<any, any>, variables: FixRequest, context: unknown) => Promise<unknown> | unknown) | undefined;
-  onError: ((error: unknown, variables: FixRequest, context: unknown) => Promise<unknown> | unknown) | undefined
+  onDone: () => void;
+  onRejected: () => void;
 }) => {
   return useMutation(({
     mutationKey: ['submit-new-fix-request'],
     mutationFn: (fixRequest: FixRequest) => postFixRequest(fixRequest),
-    onSuccess,
-    onError,
+    onSuccess: ({ data }) => {
+      console.log('@@@@@here', data)
+      if (data.status === FixRequestStatus.done) {
+        onDone();
+      } else {
+        onRejected();
+      }
+    },
   }));
 }
