@@ -27,7 +27,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
     defaultValues: INITIAL_REQUEST_VALUES,
   });
 
-  const { severity, type } = methods.watch();
+  const { severity, type, name, location, floor } = methods.watch();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     await fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());
@@ -39,12 +39,12 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
     <StyledFixRequestForm onSubmit={handleSubmit}>
       <Typography color='textPrimary' variant='h4' component='h4'>New Fix Request</Typography>
       <Typography color='textPrimary'>How can we help? Reach out - we're just a message away!</Typography>
-      <TextField size='small' variant='outlined' placeholder='Full Name' {...methods.register('name', { required: true })}></TextField>
-      <TextField size='small' variant='outlined' placeholder='Office Location' {...methods.register('location', { required: true })}></TextField>
-      <TextField size='small' variant='outlined' placeholder='Office Floor' {...methods.register('floor')}></TextField>
+      <TextField data-testid='name-input' size='small' variant='outlined' placeholder='Full Name' {...methods.register('name', { required: true })}></TextField>
+      <TextField data-testid='location-input' size='small' variant='outlined' placeholder='Office Location' {...methods.register('location', { required: true })}></TextField>
+      <TextField data-testid='floor-input' size='small' variant='outlined' placeholder='Office Floor' {...methods.register('floor')}></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />
       <SeveritySelect severity={severity} {...methods.register('severity')} />
-      <Button aria-label='submit-fix-request-button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</Button>
+      <Button aria-label='submit fix request button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</Button>
     </StyledFixRequestForm>
   )
 }

@@ -3,8 +3,10 @@ import React from 'react';
 
 export const FixTypeSelect = React.forwardRef<HTMLSelectElement, SelectProps & { type: string }>(
   ({ type, ...props }, ref) => {
+
     return (
       <Select
+        data-testid='fix-type-select'
         ref={ref}
         size='small'
         value={type}

@@ -5,6 +5,8 @@ export const SeveritySelect = React.forwardRef<HTMLSelectElement, SelectProps & 
   ({ severity, ...props }, ref) => {
     return (
       <Select
+        data-testid='severity-select'
+        aria-hidden='false'
         ref={ref}
         size='small'
         value={severity}
