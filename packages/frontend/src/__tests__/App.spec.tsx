@@ -41,7 +41,7 @@ describe('App', () => {
     })
   })
 
-  it('should show allow users to click back from success card and re-submit a new fix when the request succeeds', async () => {
+  it('should show show initial form screen when user resets success screen', async () => {
     mockRequestDoneResponse();
 
     renderWithProviders(<App />);
@@ -62,8 +62,4 @@ describe('App', () => {
       expect(await fixRequestFormDriver.findSendRequestButton()).toBeInTheDocument();
     })
   })
-
-  // it('should show show initial form screen when user resets success screen', () => {
-
-  // })
 })
