@@ -1,5 +1,5 @@
 import { ColorModeAnimatedIcon } from './ColorModeAnimatedIcon';
-import { Box, useColorScheme } from '@mui/material';
+import { useColorScheme } from '@mui/material';
 import { ColorModeIconWrapper } from './ColorModeButton.styled';
 
 export const ColorModeButton = () => {

@@ -6,26 +6,27 @@ export const useFSM = <
   Event extends string | number | symbol,
   CB extends Record<Event, FSMCallback> = Record<Event, FSMCallback>,
 >(
-  initalState: State,
+  initialState: State,
   useTransitions: () => Transition<State, Event, CB[Event]>[],
 ): FSM<State, Event, CB> => {
-  const [state, setState] = useState<State>(initalState);
+  const [state, setState] = useState<State>(initialState);
   const transitions = useTransitions();
 
-  const getState = () => {
-    return state;
-  }
+  const getState = () => state;
 
-  const dispatch = async <E extends Event>(event: E, ...args: Parameters<CB[E]>): Promise<void> => {
+  const dispatch = async <E extends Event>(
+    event: E,
+    ...args: Parameters<CB[E]> // This now should work if CB[E] is a function
+  ): Promise<void> => {
     return new Promise<void>((resolve, reject) => {
-      const transitionFount = transitions.some((transition) => {
+      const transitionFound = transitions.some((transition) => {
         if (transition.fromState === state && transition.event === event) {
           setState(transition.toState);
           if (transition.callback) {
             try {
               const p = transition.callback(...args);
               if (p instanceof Promise) {
-                p.then(resolve).catch((e: Error) => reject(e));
+                p.then(resolve).catch(reject);
               } else {
                 resolve();
               }
@@ -40,14 +41,14 @@ export const useFSM = <
         return false;
       });
 
-      if (!transitionFount) {
+      if (!transitionFound) {
         reject(new Error('No such transition'));
       }
     });
-  }
+  };
 
   return {
     dispatch,
     getState,
-  }
+  };
 }

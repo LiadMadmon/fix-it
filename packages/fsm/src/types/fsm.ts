@@ -4,7 +4,8 @@ export type Transition<State, Event, CB> = {
   toState: State;
   callback: CB;
 }
-export type FSMCallback = ((...args: any[]) => Promise<void>) | ((...args: any[]) => void) | undefined;
+
+export type FSMCallback = (...args: any[]) => any;
 
 export type FSM<
   State extends string | number | symbol,

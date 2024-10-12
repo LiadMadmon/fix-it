@@ -1,11 +1,10 @@
-import { useFSM, Transition, Callback } from "@fix-it/fsm";
+import { useFSM, Transition, FSMCallback } from "@fix-it/fsm";
 import { useFixSubmission } from "../api/useFixSubmission";
 import { openSnackbar } from "../components/openSnackbar";
 import { FixRequestEvents, FixRequestStates } from "../types/fsm";
 
-
 export const useFixRequestFSM = () => {
-  const useTransitions = (): Transition<FixRequestStates, FixRequestEvents, Callback>[] => {
+  const useTransitions = (): Transition<FixRequestStates, FixRequestEvents, FSMCallback>[] => {
     const { mutateAsync: submitForm } = useFixSubmission({
       onSuccess: submitFixRequestSuccess,
       onError: submitFixRequestError,

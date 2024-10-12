@@ -44,7 +44,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
       <TextField size='small' variant='outlined' placeholder='Office Floor' {...methods.register('floor')}></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />
       <SeveritySelect severity={severity} {...methods.register('severity')} />
-      <Button variant='contained' type="submit">{fixRequestSubmissionButtonText}</Button>
+      <Button aria-label='submit-fix-request-button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</Button>
     </StyledFixRequestForm>
   )
 }

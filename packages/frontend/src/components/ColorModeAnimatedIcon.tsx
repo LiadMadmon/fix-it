@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { animated, useSpring } from 'react-spring';
-import { useColorScheme, useTheme } from '@mui/material';
+import { useColorScheme } from '@mui/material';
 
 const IconsStyle = {
   dark: {
