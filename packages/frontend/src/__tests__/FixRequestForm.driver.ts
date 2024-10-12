@@ -1,8 +1,12 @@
 import { screen } from '@testing-library/react';
 
 export const getFixRequestFormDriver = () => {
-  const sendRequestButton = async () => {
+  const findSendRequestButton = async () => {
     return screen.findByRole('button', { name: 'submit fix request button' });
+  }
+
+  const findBackButton = async () => {
+    return screen.findByRole('button', { name: 'back button' });
   }
 
   const findFixTypeSelect = async () => {
@@ -26,11 +30,12 @@ export const getFixRequestFormDriver = () => {
   }
 
   return {
-    sendRequestButton,
+    findSendRequestButton,
     findFixTypeSelect,
     findSeveritySelect,
     findFloorInput,
     findNameInput,
     findLocationInput,
+    findBackButton,
   }
 }

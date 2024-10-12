@@ -12,7 +12,7 @@ export const FixRequestSuccess = ({ fixRequestFSM }: { fixRequestFSM: FixRequest
     <SubmittedFormSuccessCard>
       <Done sx={{ width: 100, height: 100 }} />
       <Typography marginBottom={4}>Your issue was fixed!</Typography>
-      <Button fullWidth variant='contained' onClick={handleReset}>back</Button>
+      <Button fullWidth aria-label='back button' variant='contained' onClick={handleReset}>back</Button>
     </SubmittedFormSuccessCard>
   )
 }

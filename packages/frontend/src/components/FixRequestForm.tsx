@@ -27,7 +27,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
     defaultValues: INITIAL_REQUEST_VALUES,
   });
 
-  const { severity, type, name, location, floor } = methods.watch();
+  const { severity, type } = methods.watch();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     await fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());

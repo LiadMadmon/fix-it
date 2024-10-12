@@ -18,7 +18,6 @@ export const useFixSubmission = ({
     mutationKey: ['submit-new-fix-request'],
     mutationFn: (fixRequest: FixRequest) => postFixRequest(fixRequest),
     onSuccess: ({ data }) => {
-      console.log('@@@@@here', data)
       if (data.status === FixRequestStatus.done) {
         onDone();
       } else {
