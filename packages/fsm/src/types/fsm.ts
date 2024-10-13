@@ -2,7 +2,7 @@ export type Transition<State, Event, CB> = {
   fromState: State;
   event: Event;
   toState: State;
-  callback: CB;
+  callback?: CB;
 }
 
 export type FSMCallback = (...args: any[]) => any;

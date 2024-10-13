@@ -1,0 +1,1 @@
+export const isStringNumber = (num: string) => !isNaN(Number(num)) && (typeof Number(num) === 'number')

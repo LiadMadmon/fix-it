@@ -6,6 +6,7 @@ import { FixRequestEvents, FixRequestFSM, FixRequestStates } from "../types/fsm"
 import { StyledFixRequestForm } from './FixRequestForm.styled';
 import { SeveritySelect } from "./SeveritySelect";
 import { FixTypeSelect } from "./IssueTypeSelect";
+import { isStringNumber } from "../utils/number";
 
 const StateToSubmitTextMapper = {
   [FixRequestStates.failed]: 'Retry',
@@ -30,10 +31,6 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
   });
 
   const { severity, type } = methods.watch();
-  // const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-  //   e.preventDefault();
-  //   fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());
-  // }
   const onSubmit = methods.handleSubmit((data) => {
     fixRequestFSM?.dispatch(FixRequestEvents.submit, data);
   });
@@ -72,7 +69,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
         placeholder='Office Floor'
         {...methods.register('floor', {
           required: true,
-          validate: (floor) => !isNaN(Number(floor)) && (typeof Number(floor) === 'number'),
+          validate: isStringNumber,
         })}
       ></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />

@@ -1,7 +1,7 @@
 import { Transition, FSMCallback, FSM } from './types/fsm';
 import { useState } from 'react';
 
-export const createFSM = <
+export const useCreateFSM = <
   State extends string | number | symbol,
   Event extends string | number | symbol,
   CB extends Record<Event, FSMCallback> = Record<Event, FSMCallback>,
@@ -35,9 +35,7 @@ export const createFSM = <
           } else {
             resolve();
           }
-          return true;
         }
-        return false;
       });
 
       if (!transitionFound) {
