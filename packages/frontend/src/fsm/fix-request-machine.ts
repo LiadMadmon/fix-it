@@ -2,14 +2,19 @@ import { useCreateFSM, Transition, FSMCallback } from "@fix-it/fsm";
 import { useFixSubmission } from "../api/useFixSubmission";
 import { openSnackbar } from "../components/openSnackbar";
 import { FixRequestEvents, FixRequestStates } from "../types/fsm";
+import { useFixRequestStore } from "../stores/fix-store";
 
 export const useFixRequestFSM = () => {
+  const fixRequestStore = useFixRequestStore();
+
   const submitFixRequestSuccess = () => {
     fixRequestFSM.dispatch(FixRequestEvents.submissionSuccess);
+    fixRequestStore.increaseDoneFixesCount();
   }
 
   const submitFixRequestRejected = () => {
     fixRequestFSM.dispatch(FixRequestEvents.submissionRejected);
+    fixRequestStore.increaseRejectedFixesCount();
   }
 
   const submitFixRequestError = () => {
@@ -22,13 +27,28 @@ export const useFixRequestFSM = () => {
     onError: submitFixRequestError,
   });
 
+  const handleSubmissionSuccess = () => {
+
+    openSnackbar({ severity: 'success', children: 'Your request was fixed' });
+  }
+
+  const handleSubmissionRejected = () => {
+    openSnackbar({ severity: 'error', children: 'Our staff are busy, please try again soon.' });
+  }
+
+  const handleSubmissionFailed = () => {
+    openSnackbar({ severity: 'error', children: 'We encountered an error, please try again soon.' });
+  }
+
   const transitions: Transition<FixRequestStates, FixRequestEvents, FSMCallback>[] = [
+    // { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: async () => { return new Promise((_, rej) => setTimeout(() => { rej() }, 1000)) } },
+    // { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: async () => { return new Promise((_, rej) => setTimeout(() => { rej() }, 1000)) } },
     { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },
     { fromState: FixRequestStates.rejected, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },
     { fromState: FixRequestStates.failed, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },
-    { fromState: FixRequestStates.submitting, toState: FixRequestStates.success, event: FixRequestEvents.submissionSuccess, callback: () => openSnackbar({ severity: 'success', children: 'Your request was fixed' }) },
-    { fromState: FixRequestStates.submitting, toState: FixRequestStates.rejected, event: FixRequestEvents.submissionRejected, callback: () => openSnackbar({ severity: 'error', children: 'We could not fix your request please try again' }) },
-    { fromState: FixRequestStates.submitting, toState: FixRequestStates.failed, event: FixRequestEvents.submissionFailed, callback: () => openSnackbar({ severity: 'error', children: 'We could not fix your request please try again' }) },
+    { fromState: FixRequestStates.submitting, toState: FixRequestStates.success, event: FixRequestEvents.submissionSuccess, callback: handleSubmissionSuccess },
+    { fromState: FixRequestStates.submitting, toState: FixRequestStates.rejected, event: FixRequestEvents.submissionRejected, callback: handleSubmissionRejected },
+    { fromState: FixRequestStates.submitting, toState: FixRequestStates.failed, event: FixRequestEvents.submissionFailed, callback: handleSubmissionFailed },
     { fromState: FixRequestStates.rejected, toState: FixRequestStates.idle, event: FixRequestEvents.reset },
     { fromState: FixRequestStates.success, toState: FixRequestStates.idle, event: FixRequestEvents.reset },
   ];

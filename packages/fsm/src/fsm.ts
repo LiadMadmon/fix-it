@@ -15,27 +15,30 @@ export const useCreateFSM = <
 
   const dispatch = async <E extends Event>(
     event: E,
-    ...args: Parameters<CB[E]> // This now should work if CB[E] is a function
+    ...args: Parameters<CB[E]>
   ): Promise<void> => {
     return new Promise<void>((resolve, reject) => {
       const transitionFound = transitions.some((transition) => {
-        if (transition.fromState === state && transition.event === event) {
-          setState(transition.toState);
-          if (transition.callback) {
-            try {
-              const p = transition.callback(...args);
-              if (p instanceof Promise) {
-                p.then(resolve).catch(reject);
-              } else {
-                resolve();
-              }
-            } catch (e) {
-              reject('Exception caught in callback');
+        if (transition.fromState !== state || transition.event !== event) {
+          return false;
+        }
+
+        setState(transition.toState);
+
+        if (transition.callback) {
+          try {
+            const p = transition.callback(...args);
+            if (p instanceof Promise) {
+              p.then(resolve).catch(reject);
+            } else {
+              resolve();
             }
-          } else {
-            resolve();
+          } catch (e) {
+            reject('Exception caught in callback');
           }
         }
+
+        return true;
       });
 
       if (!transitionFound) {
