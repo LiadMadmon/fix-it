@@ -30,21 +30,51 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
   });
 
   const { severity, type } = methods.watch();
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    console.log('@@@@@submitting');
-    await fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());
-  }
+  // const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  //   e.preventDefault();
+  //   fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());
+  // }
+  const onSubmit = methods.handleSubmit((data) => {
+    fixRequestFSM?.dispatch(FixRequestEvents.submit, data);
+  });
 
   const fixRequestSubmissionButtonText = StateToSubmitTextMapper[fixRequestFSM.getState()];
+  const { location: locationError, name: nameError, floor: floorError } = methods.formState.errors;
 
   return (
-    <StyledFixRequestForm onSubmit={handleSubmit}>
+    <StyledFixRequestForm onSubmit={onSubmit}>
       <Typography color='textPrimary' variant='h4' component='h4'>New Fix Request</Typography>
       <Typography color='textPrimary'>How can we help? Reach out - we're just a message away!</Typography>
-      <TextField data-testid='name-input' size='small' variant='outlined' placeholder='Full Name' {...methods.register('name', { required: true })}></TextField>
-      <TextField data-testid='location-input' size='small' variant='outlined' placeholder='Office Location' {...methods.register('location', { required: true })}></TextField>
-      <TextField data-testid='floor-input' size='small' variant='outlined' placeholder='Office Floor' {...methods.register('floor')}></TextField>
+      <TextField
+        data-testid='name-input'
+        error={!!nameError}
+        helperText={!!nameError ? "Please insert a valid name" : null}
+        size='small'
+        variant='outlined'
+        placeholder='Full Name'
+        {...methods.register('name', { required: true })}
+      ></TextField>
+      <TextField
+        data-testid='location-input'
+        error={!!locationError}
+        helperText={!!locationError ? "Please insert a valid location" : null}
+        size='small'
+        variant='outlined'
+        placeholder='Office Location'
+        {...methods.register('location', { required: true })}
+      ></TextField>
+      <TextField
+        data-testid='floor-input'
+        error={!!floorError}
+        helperText={floorError ? "Please insert your floor number" : null}
+        size='small'
+        variant='outlined'
+        placeholder='Office Floor'
+        {...methods.register('floor', {
+          required: true,
+          validate: (floor) => !isNaN(Number(floor)) && (typeof Number(floor) === 'number'),
+        })}
+      ></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />
       <SeveritySelect severity={severity} {...methods.register('severity')} />
       <LoadingButton loading={fixRequestFSM.getState() === FixRequestStates.submitting} aria-label='submit fix request button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</LoadingButton>
