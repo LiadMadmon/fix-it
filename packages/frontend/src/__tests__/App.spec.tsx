@@ -49,7 +49,6 @@ describe('App', () => {
     const sendRequestButton = await fixRequestFormDriver.findSendRequestButton();
     fireEvent.click(sendRequestButton);
 
-
     const backButton = await fixRequestFormDriver.findBackButton();
     await waitFor(async () => {
       expect(sendRequestButton).not.toBeInTheDocument();

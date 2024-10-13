@@ -1,16 +1,15 @@
 import { Transition, FSMCallback, FSM } from './types/fsm';
 import { useState } from 'react';
 
-export const useFSM = <
+export const createFSM = <
   State extends string | number | symbol,
   Event extends string | number | symbol,
   CB extends Record<Event, FSMCallback> = Record<Event, FSMCallback>,
 >(
   initialState: State,
-  useTransitions: () => Transition<State, Event, CB[Event]>[],
+  transitions: Transition<State, Event, CB[Event]>[],
 ): FSM<State, Event, CB> => {
   const [state, setState] = useState<State>(initialState);
-  const transitions = useTransitions();
 
   const getState = () => state;
 

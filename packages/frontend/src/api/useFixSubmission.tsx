@@ -10,13 +10,16 @@ const postFixRequest = (fixRequest: FixRequest) => {
 export const useFixSubmission = ({
   onDone,
   onRejected,
+  onError,
 }: {
   onDone: () => void;
   onRejected: () => void;
+  onError: () => void;
 }) => {
   return useMutation(({
     mutationKey: ['submit-new-fix-request'],
     mutationFn: (fixRequest: FixRequest) => postFixRequest(fixRequest),
+    onError,
     onSuccess: ({ data }) => {
       if (data.status === FixRequestStatus.done) {
         onDone();

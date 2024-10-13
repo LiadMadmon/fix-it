@@ -1,6 +1,7 @@
 import { FixRequest } from "@fix-it/shared-types";
 import { useForm } from 'react-hook-form';
-import { Button, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
+import { LoadingButton } from '@mui/lab'
 import { FixRequestEvents, FixRequestFSM, FixRequestStates } from "../types/fsm";
 import { StyledFixRequestForm } from './FixRequestForm.styled';
 import { SeveritySelect } from "./SeveritySelect";
@@ -8,6 +9,7 @@ import { FixTypeSelect } from "./IssueTypeSelect";
 
 const StateToSubmitTextMapper = {
   [FixRequestStates.failed]: 'Retry',
+  [FixRequestStates.rejected]: 'Retry',
   [FixRequestStates.idle]: 'Submit',
   [FixRequestStates.retrying]: 'Submit',
   [FixRequestStates.submitted]: 'Submit',
@@ -30,6 +32,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
   const { severity, type } = methods.watch();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+    console.log('@@@@@submitting');
     await fixRequestFSM?.dispatch(FixRequestEvents.submit, methods.getValues());
   }
 
@@ -44,7 +47,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
       <TextField data-testid='floor-input' size='small' variant='outlined' placeholder='Office Floor' {...methods.register('floor')}></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />
       <SeveritySelect severity={severity} {...methods.register('severity')} />
-      <Button aria-label='submit fix request button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</Button>
+      <LoadingButton loading={fixRequestFSM.getState() === FixRequestStates.submitting} aria-label='submit fix request button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</LoadingButton>
     </StyledFixRequestForm>
   )
 }
