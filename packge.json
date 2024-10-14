@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "pnpm run -r dev"
+    "dev": "pnpm run -r dev",
+    "build:frontend": "pnpm --filter frontend run build",
+    "deploy:frontend": "pnpm --filter frontend run deploy"
   },
   "engines": {
     "node": ">=20.0.0"

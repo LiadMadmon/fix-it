@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc -b && vite build",
-    "predeploy": "pnpm build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d dist",
     "test": "vitest",
     "lint": "eslint .",
