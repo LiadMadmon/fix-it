@@ -1,6 +1,6 @@
-import { Card, styled } from "@mui/material";
+import { Card, styled, Theme } from "@mui/material";
 
-export const StyledFixRequestForm = styled('form')(({ theme }) => ({
+const getCardStyles = (theme: Theme) => ({
   display: 'flex',
   padding: 50,
   gap: 20,
@@ -11,17 +11,15 @@ export const StyledFixRequestForm = styled('form')(({ theme }) => ({
   flexDirection: 'column',
   borderRadius: 24,
   background: theme.palette.surface[theme.palette.mode],
-}))
+  [theme.breakpoints.down('sm')]: {
+    marginTop: 20,
+    transform: 'translateY(0)',
+    padding: 32,
+  },
+} as const)
 
+export const StyledFixRequestForm = styled('form')(({ theme }) => getCardStyles(theme))
 export const SubmittedFormSuccessCard = styled(Card)(({ theme }) => ({
-  display: 'flex',
   alignItems: 'center',
-  width: 'fit-content',
-  padding: 50,
-  margin: '0 auto',
-  marginTop: '50vh',
-  transform: 'translateY(-50%)',
-  flexDirection: 'column',
-  borderRadius: 24,
-  background: theme.palette.surface[theme.palette.mode],
+  ...getCardStyles(theme)
 }))

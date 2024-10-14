@@ -10,14 +10,9 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "paths": {
-      "*": [
-        "src/types/*"
-      ]
-    }
   },
   "include": [
-    "src/**/*",
+    "api/server.js",
   ],
   "exclude": [
     "node_modules",

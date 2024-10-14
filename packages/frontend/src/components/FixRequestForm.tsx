@@ -1,6 +1,6 @@
 import { FixRequest } from "@fix-it/shared-types";
 import { useForm } from 'react-hook-form';
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, useTheme } from "@mui/material";
 import { LoadingButton } from '@mui/lab'
 import { FixRequestEvents, FixRequestFSM, FixRequestStates } from "../types/fsm";
 import { StyledFixRequestForm } from './FixRequestForm.styled';
@@ -29,6 +29,7 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
   const methods = useForm<FixRequest>({
     defaultValues: INITIAL_REQUEST_VALUES,
   });
+  const theme = useTheme();
 
   const { severity, type } = methods.watch();
   const onSubmit = methods.handleSubmit((data) => {
@@ -40,8 +41,8 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
 
   return (
     <StyledFixRequestForm onSubmit={onSubmit}>
-      <Typography color='textPrimary' variant='h4' component='h4'>New Fix Request</Typography>
-      <Typography color='textPrimary'>How can we help? Reach out - we're just a message away!</Typography>
+      <Typography color={theme.palette.text.primary} variant='h4' component='h4'>New Fix Request</Typography>
+      <Typography color={theme.palette.text.primary}>How can we help? Reach out - we're just a message away!</Typography>
       <TextField
         data-testid='name-input'
         error={!!nameError}

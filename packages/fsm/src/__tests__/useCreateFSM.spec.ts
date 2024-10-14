@@ -3,10 +3,8 @@ import { FSMCallback, Transition } from '../types/fsm';
 import { useCreateFSM } from '../fsm';
 
 describe('useCreateFSM with Car States', () => {
-
   type State = 'parked' | 'driving' | 'neutral' | 'broken';
   type Event = 'start' | 'drive' | 'park' | 'breakDown';
-
 
   const createCarTransitions = (callbacks: Partial<Record<Event, FSMCallback>> = {}): Transition<State, Event, FSMCallback>[] => [
     {
