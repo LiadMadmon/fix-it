@@ -33,6 +33,9 @@ describe('App', () => {
 
     renderWithProviders(<App />);
 
+    await fixRequestFormDriver.fillName();
+    await fixRequestFormDriver.fillLocation();
+    await fixRequestFormDriver.fillFloor();
     const sendRequestButton = await fixRequestFormDriver.findSendRequestButton();
     fireEvent.click(sendRequestButton);
 
@@ -46,6 +49,9 @@ describe('App', () => {
 
     renderWithProviders(<App />);
 
+    await fixRequestFormDriver.fillName();
+    await fixRequestFormDriver.fillLocation();
+    await fixRequestFormDriver.fillFloor();
     const sendRequestButton = await fixRequestFormDriver.findSendRequestButton();
     fireEvent.click(sendRequestButton);
 

@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 export const getFixRequestFormDriver = () => {
   const findSendRequestButton = async () => {
@@ -29,9 +29,27 @@ export const getFixRequestFormDriver = () => {
     return (await screen.findByTestId('location-input')).querySelector('input');
   }
 
+  const fillName = async () => {
+    const nameInput = await findNameInput();
+    fireEvent.change(nameInput!, { target: { value: 'john doe' } })
+  }
+
+  const fillLocation = async () => {
+    const locationInput = await findLocationInput()
+    fireEvent.change(locationInput!, { target: { value: 'tel aviv' } })
+  }
+
+  const fillFloor = async () => {
+    const floorInput = await findFloorInput();
+    fireEvent.change(floorInput!, { target: { value: '23' } })
+  }
+
   return {
     findSendRequestButton,
     findFixTypeSelect,
+    fillName,
+    fillLocation,
+    fillFloor,
     findSeveritySelect,
     findFloorInput,
     findNameInput,
