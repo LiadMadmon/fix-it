@@ -10,7 +10,7 @@ export const ColorModeButton = () => {
   }
 
   return (
-    <ColorModeIconWrapper onClick={handleToggleColorMode}>
+    <ColorModeIconWrapper color={mode === 'light' ? 'black' : 'white'} onClick={handleToggleColorMode}>
       <ColorModeAnimatedIcon />
     </ColorModeIconWrapper>
   );
