@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "ts-node ./src/server",
-    "build": "tsc -b && vite build"
+    "dev": "ts-node ./src/server"
   },
   "dependencies": {
     "express": "^4.21.1"
