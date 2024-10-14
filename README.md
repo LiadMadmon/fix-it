@@ -53,12 +53,6 @@ dispatch('submit')
   .then(() => dispatch('resolve'))
   .catch(error => console.error(error));
 
-  ## Website Demo
-
-You can explore the live demo of the application at the following URL: [Fix-It Demo](https://liadmadmon.github.io/fix-it)
-
-## Getting Started
-
 ```
 
 
