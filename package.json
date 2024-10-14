@@ -1,5 +1,18 @@
 {
-	"devDependencies": {
-		"gh-pages": "^6.2.0"
-	}
+	"name": "fix-it",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "pnpm run -r dev",
+		"build:frontend": "pnpm --filter @fix-it/frontend run build",
+		"deploy:frontend": "pnpm --filter @fix-it/frontend run deploy"
+	},
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"workspaces": [
+		"packages/frontend",
+		"packages/fsm"
+	]
 }
