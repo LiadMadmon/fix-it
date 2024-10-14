@@ -41,8 +41,6 @@ export const useFixRequestFSM = () => {
   }
 
   const transitions: Transition<FixRequestStates, FixRequestEvents, FSMCallback>[] = [
-    // { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: async () => { return new Promise((_, rej) => setTimeout(() => { rej() }, 1000)) } },
-    // { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: async () => { return new Promise((_, rej) => setTimeout(() => { rej() }, 1000)) } },
     { fromState: FixRequestStates.idle, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },
     { fromState: FixRequestStates.rejected, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },
     { fromState: FixRequestStates.failed, toState: FixRequestStates.submitting, event: FixRequestEvents.submit, callback: submitForm },

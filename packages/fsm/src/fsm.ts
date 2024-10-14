@@ -43,6 +43,8 @@ export const useCreateFSM = <
 
       if (!transitionFound) {
         reject(new Error('No such transition'));
+      } else {
+        resolve();
       }
     });
   };

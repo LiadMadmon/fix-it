@@ -10,7 +10,7 @@ export type FSMCallback = (...args: any[]) => any;
 export type FSM<
   State extends string | number | symbol,
   Event extends string | number | symbol,
-  CB extends Record<Event, FSMCallback> = Record<Event, FSMCallback>,
+  CB extends Record<Event, FSMCallback>,
 > = {
   dispatch: <E extends Event>(event: E, ...args: Parameters<CB[E]>) => Promise<void>;
   getState: () => State;
