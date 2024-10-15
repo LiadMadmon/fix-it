@@ -1,8 +1,8 @@
-# Fix-It Monorepo
+# Fix-It App
 
 ## Website Demo
 
-You can explore the live demo of the application at the following URL: [Fix-It Demo](https://liadmadmon.github.io/fix-it)
+You can explore the live demo of the application at the following URL: [Fix-It App Demo](https://liadmadmon.github.io/fix-it)
 
 ## Overview
 
