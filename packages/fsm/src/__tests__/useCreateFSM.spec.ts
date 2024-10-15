@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { FSMCallback, Transition } from '../types/fsm';
-import { useCreateFSM } from '../fsm';
+import { useCreateFSM } from '../useCreateFSM';
 
 describe('useCreateFSM with Car States', () => {
   type State = 'parked' | 'driving' | 'neutral' | 'broken';

@@ -1,3 +1,3 @@
 
-export * from './fsm';
+export * from './useCreateFSM';
 export * from './types';
