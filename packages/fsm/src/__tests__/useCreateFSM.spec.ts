@@ -68,7 +68,7 @@ describe('useCreateFSM with Car States', () => {
       try {
         await result.current.dispatch('breakDown');
       } catch (error) {
-
+        expect(error).toBeDefined();
       }
     });
 
@@ -110,7 +110,7 @@ describe('useCreateFSM with Car States', () => {
       try {
         await result.current.dispatch('start');
       } catch (error) {
-
+        expect(error).toBeDefined();
       }
     });
 
