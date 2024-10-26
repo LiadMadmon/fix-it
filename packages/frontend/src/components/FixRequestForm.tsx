@@ -75,7 +75,14 @@ export const FixRequestForm = ({ fixRequestFSM }: { fixRequestFSM: FixRequestFSM
       ></TextField>
       <FixTypeSelect type={type} {...methods.register('type')} />
       <SeveritySelect severity={severity} {...methods.register('severity')} />
-      <LoadingButton loading={fixRequestFSM.getState() === FixRequestStates.submitting} aria-label='submit fix request button' variant='contained' type="submit">{fixRequestSubmissionButtonText}</LoadingButton>
+      <LoadingButton
+        loading={fixRequestFSM.getState() === FixRequestStates.submitting}
+        aria-label='submit fix request button'
+        variant='contained'
+        type="submit"
+      >
+        {fixRequestSubmissionButtonText}
+      </LoadingButton>
     </StyledFixRequestForm>
   )
 }

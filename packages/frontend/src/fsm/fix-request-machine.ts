@@ -28,7 +28,6 @@ export const useFixRequestFSM = () => {
   });
 
   const handleSubmissionSuccess = () => {
-
     openSnackbar({ severity: 'success', children: 'Your request was fixed' });
   }
 
@@ -47,7 +46,6 @@ export const useFixRequestFSM = () => {
     { fromState: FixRequestStates.submitting, toState: FixRequestStates.success, event: FixRequestEvents.fixDone, callback: handleSubmissionSuccess },
     { fromState: FixRequestStates.submitting, toState: FixRequestStates.rejected, event: FixRequestEvents.fixRejected, callback: handleSubmissionRejected },
     { fromState: FixRequestStates.submitting, toState: FixRequestStates.failed, event: FixRequestEvents.submissionFailed, callback: handleSubmissionFailed },
-    { fromState: FixRequestStates.rejected, toState: FixRequestStates.idle, event: FixRequestEvents.reset },
     { fromState: FixRequestStates.success, toState: FixRequestStates.idle, event: FixRequestEvents.reset },
   ];
 
