@@ -1,38 +1,27 @@
-name: Upload website
-
+name: pnpm Example Workflow
 on:
   push:
-    branches:
-      - main
 
 jobs:
   Deploy:
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      # Step 2: Setup Node.js with caching for pnpm
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # Use Node.js v18
-          cache: 'pnpm' # Cache dependencies installed with pnpm
-
-      # Step 3: Install pnpm globally
+    build:
+      runs-on: ubuntu-22.04
+      strategy:
+        matrix:
+          node-version: [20]
+      steps:
+      - uses: actions/checkout@v4
       - name: Install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
-
-      # Step 4: Install dependencies using pnpm
-      - name: Install Dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Install dependencies
         run: pnpm install
-
-      # Step 5: Build the static files
-      - name: Build Static Files
-        run: pnpm run build
-
-      # Step 6: Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -42,4 +31,4 @@ jobs:
 
       # Step 7: Deploy static site to S3 bucket
       - name: Deploy Static Site to S3
-        run: aws s3 sync ./build s3://fix-it-bucket --delete
+        run: aws s3 sync ./packages/frontend/build s3://fix-it-bucket --delete
