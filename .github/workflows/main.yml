@@ -16,10 +16,10 @@ jobs:
         uses: actions/setup-node@v2
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build static file
-        run: nps run build
+        run: pnpm run build
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
