@@ -6,8 +6,7 @@
 	"scripts": {
 		"dev": "pnpm run -r dev",
 		"build:frontend": "pnpm --filter @fix-it/frontend run build",
-		"deploy:frontend": "pnpm --filter @fix-it/frontend run deploy",
-		"release:frontend": "pnpm run build:frontend && pnpm run deploy:frontend"
+		"deploy:frontend": "pnpm --filter @fix-it/frontend run deploy"
 	},
 	"engines": {
 		"node": ">=20.0.0"
