@@ -22,6 +22,8 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install
+    - name: Build Statics
+      run: pnpm build
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
