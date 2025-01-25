@@ -17,12 +17,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use a modern version of Node.js
-          cache: 'pnpm' # Enable pnpm caching
+          node-version: '18' # Use Node.js v18
+          cache: 'pnpm' # Cache dependencies installed with pnpm
 
       # Step 3: Install pnpm globally
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: corepack enable && corepack prepare pnpm@latest --activate
 
       # Step 4: Install dependencies using pnpm
       - name: Install Dependencies
@@ -43,10 +43,3 @@ jobs:
       # Step 7: Deploy static site to S3 bucket
       - name: Deploy Static Site to S3
         run: aws s3 sync ./build s3://fix-it-bucket --delete
-
-      # Step 8: Invalidate CloudFront cache (optional but recommended)
-      - name: Invalidate CloudFront Cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
