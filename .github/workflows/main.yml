@@ -9,18 +9,30 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v2
+      # Step 2: Setup Node.js with caching for pnpm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use a modern version of Node.js
+          cache: 'pnpm' # Enable pnpm caching
 
-      - name: Install dependencies
+      # Step 3: Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Step 4: Install dependencies using pnpm
+      - name: Install Dependencies
         run: pnpm install
 
-      - name: Build static file
+      # Step 5: Build the static files
+      - name: Build Static Files
         run: pnpm run build
 
+      # Step 6: Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -28,5 +40,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./build s3://fix-it-bucket
+      # Step 7: Deploy static site to S3 bucket
+      - name: Deploy Static Site to S3
+        run: aws s3 sync ./build s3://fix-it-bucket --delete
+
+      # Step 8: Invalidate CloudFront cache (optional but recommended)
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
